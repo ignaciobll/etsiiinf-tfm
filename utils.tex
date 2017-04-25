@@ -1,0 +1,190 @@
+%% -- PARA CITAR CAPITULOS -----------------------------------------------------
+\newcommand{\chapterName}[1]{Capítulo~\ref{chap:#1}}
+\newcommand{\secName}[1]{Sección~\ref{sec:#1}}
+\newcommand{\chapterTitle}[2]{\item[\chapterName{#1}: \nameref{chap:#1}] #2}
+
+\newcommand{\secCite}[1]{(ver Sección~\ref{sec:#1})}
+\newcommand{\subCite}[1]{(ver Subsección~\ref{sub:#1})}
+\newcommand{\subsCite}[1]{(ver Subsubsección~\ref{ssub:#1})}
+\newcommand{\parCite}[1]{(ver Parrafo~\ref{par:#1})}
+
+\newcommand{\figCite}[1]{(ver Figura~\ref{fig:#1})}
+\newcommand{\figCites}[2]{(ver Figuras~\ref{fig:#1}\textasciitilde\ref{fig:#2})}
+
+\newcommand{\aneCite}[1]{(ver Anexo~\ref{cha:#1})}
+
+\newcommand{\eqCite}[1]{(ver Ecuación~\ref{eq:#1})}
+
+\newcommand{\tableCite}[1]{(ver Cuadro~\ref{tab:#1})}
+\newcommand{\tableCiteRange}[2]{(ver Cuadros~\ref{tab:#1}\textasciitilde\ref{tab:#2})}
+
+\newcommand{\listCite}[1]{(ver Listado~\ref{code:#1})}
+\newcommand{\listCites}[2]{(ver Listados~\ref{code:#1}\textasciitilde\ref{code:#2})}
+
+%% -- PARA TABLAS -----------------------------------------------------
+\newcommand\bitem[1]{\item \textbf{#1}}
+\renewcommand\theadfont{\bfseries}
+
+% para alinear las columnas
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\myTable}[4][\small]{%
+  \begin{savenotes}
+    \begin{table}[hp]
+      \centering
+      \rowcolors{1}{}{lightgray}
+      {%
+        #1
+        \input{./tables/#2.tex}
+      }
+     \caption{#3}
+     \label{tab:#4}
+    \end{table}
+  \end{savenotes}
+}
+
+
+%% -- PARA ECUACIONES -----------------------------------------------------
+\newenvironment{referencedEquation}[1]{%
+  \begin{equation} \label{eq:#1}
+}{%
+  \end{equation}
+}
+
+
+%% -- PARA CITAS -----------------------------------------------------
+
+\makeatletter
+
+\newenvironment{myQuote}[2][2em]{%
+  \setlength{\@tempdima}{#1}%
+  \def\myQuote@author{#2}%
+  \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+  \itshape
+}{%
+  \par\normalfont\hfill--\ \myQuote@author\hspace*{\@tempdima}\par\bigskip
+}
+
+\newenvironment{myQuoteWithAutor}[2]{%
+  \begin{myQuote}{#1, \textit{#2}}
+}{%
+  \end{myQuote}
+}
+
+\makeatother
+
+
+%% -- PARA ORDENAR UN CONJUNTO DE ITEMS -----------------------------------------------------
+% Fuente original: https://tex.stackexchange.com/questions/121489/alphabetically-display-the-items-in-itemize
+
+\newcommand{\sortsimpleitem}[2]{%
+\DTLnewrow{list}% Create a new entry
+\DTLnewdbentry{list}{sortlabel}{#1}% Add entry sortlabel (no optional argument)
+\DTLnewdbentry{list}{description}{\textbf{#1}: #2}
+}
+
+\newcommand{\sortitem}[3][\relax]{%
+\DTLnewrow{list}% Create a new entry
+\ifx#1\relax
+    \DTLnewdbentry{list}{sortlabel}{#2}% Add entry sortlabel (no optional argument)
+    \DTLnewdbentry{list}{description}{\textbf{#2} \cite{#2}: #3}
+\else
+    \DTLnewdbentry{list}{sortlabel}{#1}% Add entry sortlabel (optional argument)
+    \DTLnewdbentry{list}{description}{\textbf{#2} \cite{#1}: #3}
+\fi%
+}
+
+\newcommand{\sortitemcustombib}[4][\relax]{%
+\DTLnewrow{list}% Create a new entry
+\ifx#1\relax
+    \DTLnewdbentry{list}{sortlabel}{#3}% Add entry sortlabel (no optional argument)
+    \DTLnewdbentry{list}{description}{\textbf{#3} \cite{#2}: #4}
+\else
+    \DTLnewdbentry{list}{sortlabel}{#1}% Add entry sortlabel (optional argument)
+    \DTLnewdbentry{list}{description}{\textbf{#3} \cite{#2}: #4}
+\fi%
+}
+
+\newenvironment{sortedlist}{%
+\DTLifdbexists{list}{\DTLcleardb{list}}{\DTLnewdb{list}}% Create new/discard old list
+}{%
+\DTLsort{sortlabel}{list}% Sort list
+\begin{itemize}%
+    \DTLforeach*{list}{\theDesc=description}{%
+    \item \theDesc}% Print each item
+\end{itemize}%
+}
+
+%% -- PARA FIGURAS -----------------------------------------------------
+\NewDocumentCommand{\myBaseFigure}{O{1.0}mmmm}{%
+  \begin{figure}[!h]
+  \begin{center}
+  \includegraphics[width=#1\textwidth]{./figures/#2}
+  \caption[#3]{#4}
+  \label{fig:#5}
+  \end{center}
+  \end{figure}
+}
+
+\NewDocumentCommand{\myFigure}{O{1.0}mmm}{%
+  \myBaseFigure[#1]{#2}{#3}{#3}{#4}
+}
+
+\NewDocumentCommand{\myTOCFigure}{O{1.0}O{\footnotesize}mmmm}{%
+\myBaseFigure[#1]{#3}{#4}{#4\\{#2 #5}}{#6}
+}
+
+\NewDocumentCommand{\myTOCJoinFigure}{O{1.0}O{\footnotesize}mmmm}{%
+\myBaseFigure[#1]{#3}{#4}{#4 #5}{#6}
+}
+
+\NewDocumentCommand{\myReferencedFigure}{O{1.0}O{\footnotesize}mmmm}{%
+\myBaseFigure[#1]{#3}{#4}{#4\\{#2 Fuente: #5}}{#6}
+}
+
+\NewDocumentCommand{\myFigureRotated}{O{1.0}mmm}{%
+  \begin{figure}[!h]
+  \begin{center}
+  \includegraphics[height=#1\textwidth,angle=90]{./figures/#2}
+  \caption{#3}
+  \label{fig:#4}
+  \end{center}
+  \end{figure}
+}
+
+%% -- PARA TEXTO ENTRE COMILLAS -----------------------------------------------------
+\newcommand{\commentMe}[1]{<<#1>>}
+\newcommand{\citeMe}[1]{\commentMe{\textit{#1}}}
+
+%% -- PARA LISTADOS -----------------------------------------------------
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newcommand{\myListing}[5][\footnotesize]{%
+  \bgroup                    %%<<-- use this
+  \inputminted[
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    %bgcolor=backcolour,
+    fontsize=#1,
+    linenos,
+    breaklines
+  ]{#2}{./code/#3}
+  \captionof{listing}{#4\label{code:#5}}
+  \egroup                  %% and this
+}
+
+%% -- PARA PODER DIBUJAR EL TICK DE LOS OBJETIVOS -----------------------------------------------------
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+%% -- AYUDAS PARA LA HORA DE ESCRIBIR Y PODER VAGUEAR MAS ---------------------------------------------
+\newcommand{\contHerr}{Algunas de estas herramientas son:}
+
+\newcommand{\figMockup}[3][0.7]{\myFigure[#1]{mockup-#2.png}{Boceto de la interfaz de \commentMe{#3}}{mockup-#2}}
+\newcommand{\figDiaSeq}[2]{\myFigure[0.7]{diagrama-secuencia-#1.png}{Diagrama de secuencia de \commentMe{#2}}{diagrama-secuencia-#1}}
+
+\newcommand{\myAppScreen}[3][0.9]{%
+  \myFigure[#1]{manual/#2.png}{#3}{manual-#2}
+}

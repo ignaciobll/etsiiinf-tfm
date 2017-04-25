@@ -1,0 +1,72 @@
+\documentclass[oneside]{etsii-tfm}
+\usepackage{float}
+\usepackage{custom}
+\usepackage{hologo}
+\usepackage{array} % para alinear las columnas
+\usepackage{xparse}
+\usepackage{varwidth}
+\usepackage{xstring}
+\usepackage{datatool}% http://ctan.org/pkg/datatool
+\usepackage{footnote}
+\usepackage[all]{hypcap}    %% use after hyperref
+\usepackage{caption}
+\usepackage{subcaption}  %Include this in MVE as I have figures with subcaption elsewhere
+\usepackage{tikz} % para el checkmark
+\usepackage{rotating} 
+\usepackage{pdflscape}
+\usepackage{makecell}
+\usepackage{longtable} % Nos permite tener tablas en dos páginas
+
+% Para las ecuaciones
+\usepackage{amsmath}
+
+\input{utils.tex}
+
+\input{metadata.tex}
+
+\begin{document}
+
+\cover
+\bastardtitle
+\frontpage
+
+\frontmatter
+\copyrightpage
+
+\input{resumen.tex}
+
+\input{thanks.tex}
+\dedication{
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.
+}
+
+\tableofcontents
+\listoftables
+\listoffigures
+\lstlistoflistings
+\input{acro.tex}
+
+\mainmatter
+
+\input{intro.tex}
+\input{objetivos.tex}
+\input{antecedentes.tex}
+%\input{desarrollo.tex}
+%\input{resultados.tex}
+%\input{conclusiones.tex}
+%\input{lineas-futuras.tex}
+
+\appendix
+\appendixtitle
+\input{anexo1.tex}
+
+%{\scriptsize \input{GFDL.tex}}
+
+\backmatter
+\printbibliography[heading=myheading]
+\cleardoublepage
+
+\end{document}

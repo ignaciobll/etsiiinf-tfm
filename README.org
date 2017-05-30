@@ -1,0 +1,16 @@
+* Plantilla LaTeX para el Trabajo de Fin de Master - ETSIINF
+
+Esta plantilla no es original mia, es un fork de
+https://bitbucket.org/Gonlos/etsii-tfm con la intención de corregir
+algunos fallos e ir ampliand colaborativamente la plantilla.
+
+** Compilar
+
+Para poder compilar el documento será necesario colocarse en el
+directorio del proyecto y ejecutar el comando
+
+#+BEGIN_SRC bash
+
+pdflatex --shell-scape main
+
+#+END_SRC

@@ -41,7 +41,7 @@
 \renewcommand{\ttdefault}{lmtt}  % lmoderm typewriter
 
 \usepackage[htt]{hyphenat}
-\usepackage{atbeginend}
+% \usepackage{atbeginend}
 \usepackage{xifthen}
 
 \usepackage{enumitem}
@@ -102,9 +102,9 @@
 
 % cebreado para cuadros
 \newcommand{\myrowcolors}[1]{\rowcolors{#1}{tabrowbg}{}}
-\AfterEnd{tabular}{\rowcolors{1}{}{}}
-\AfterBegin{document}{\renewcommand\bibname{Referencias}}
-\BeforeEnd{document}{\attributionArco}
+% \AfterEnd{tabular}{\rowcolors{1}{}{}}
+% \AfterBegin{document}{\renewcommand\bibname{Referencias}}
+% \BeforeEnd{document}{\attributionArco}
 
 %% -- LISTADOS DE CÓDIGO -------------------------------------------------------
 \usepackage{listings}
@@ -116,7 +116,7 @@
 \newlistof{listing}{lol}{Índice de listados}
 
 \usepackage[newfloat]{minted}
-\usepackage{caption}
+% \usepackage{caption}
 
 \newenvironment{code}{\captionsetup{type=listing}}{}
 \SetupFloatingEnvironment{listing}{%
@@ -650,7 +650,7 @@ safeinputenc
   }
 
 
-\AtBeginDocument{%
+\AfterBegin{%
   % separación entre filas en los cuadros
   \setlength{\extrarowheight}{1pt}
 }

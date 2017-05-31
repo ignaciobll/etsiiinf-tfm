@@ -4,6 +4,9 @@ Esta plantilla no es original mia, es un fork de
 https://bitbucket.org/Gonlos/etsii-tfm con la intención de corregir
 algunos fallos e ir ampliand colaborativamente la plantilla.
 
+Los fallos corregidos de compilación son a causa de librerías que por
+defecto no están instaladas en Arch con ~texlive-most~.
+
 ** Compilar
 
 Para poder compilar el documento será necesario colocarse en el
